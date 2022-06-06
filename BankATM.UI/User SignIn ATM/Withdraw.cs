@@ -1,5 +1,6 @@
 ﻿using BankATM.Data;
 using BankATM.UI.User_SignIn_ATM.Print;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,35 +10,42 @@ using System.Threading.Tasks;
 namespace BankATM.UI.User_SignIn_ATM
 {
     public class Withdraw
+
     {
-        private readonly decimal Amount;
-        private readonly ISignInID<UserCardId> CardId;
-        private readonly ISignInID<UserBillId> BillId;
-        private readonly Iprint<PrintUserBalance> PrintUser;
-        public Withdraw(decimal amount, ISignInID<UserCardId> cardId, ISignInID<UserBillId> billId, Iprint<PrintUserBalance> print)
+        private readonly IContext _context;
+        private readonly decimal _amount;
+        private readonly ISignInId<UserCardId> _cardId;
+        private readonly ISignInId<UserBillId> _billId;
+        private readonly Iprint<PrintUserBalance> _printUser;
+        
+        public Withdraw(decimal amount, ISignInId<UserCardId> cardId, ISignInId<UserBillId> billId, Iprint<PrintUserBalance> print, IContext context)
         {
-            Amount = amount;
-            CardId = cardId;
-            BillId = billId;
-            this.PrintUser = print;
+            _amount = amount;
+            _cardId = cardId;
+            _billId = billId;
+            _printUser = print;
+            _context = context;
+            
         }
 
         private decimal Balance()
         {
-            Context context = new Context();
-           var AmountAccount = context
+            
+        return  _context
                 .Bill
-                .Where(n => n.CardId == CardId.Id())
-                .Select(n => n.Balance).FirstOrDefault();
+                .Where(n => n.CardId == _cardId
+                .GetDbId())
+                .Select(n => n.Balance)
+                .FirstOrDefault();
 
-            return AmountAccount;
+            
         }
         private bool CheckAmountAccount()
         {
             var balance=Balance();
 
 
-            if (Amount<= balance)
+            if (_amount<= balance)
             {
                 return true;
             }
@@ -47,23 +55,28 @@ namespace BankATM.UI.User_SignIn_ATM
         }
         private void TransactionsLog()
         {
-            var billId = BillId.Id();
+            var billId = _billId.GetDbId();
             Context context = new Context();
+            
             var Transactionlog = new Transactions
             {
-                WithdrawAmount = Amount,
+                WithdrawAmount = _amount,
                 WithdrowTime = DateTime.Now,
-                BillId = billId,
+                BillId =(int) billId,
             };
-            context.Add(Transactionlog);
-            context.SaveChanges();
+            //context.Add(Transactionlog);
+            _context.Transactions.Add(Transactionlog);
+            _context.SaveChanges();
         }
         private void UpdateBalance()
         {
            var balance= Balance();
-            var finalresult = balance - Amount;
+            var finalresult = balance - _amount;
             Context context = new Context();
-            var UpdateDataBase = context.Bill.Where(n => n.CardId == CardId.Id()).FirstOrDefault();
+            var UpdateDataBase = context
+                .Bill
+                .Where(n => n.CardId == _cardId.GetDbId())
+                .FirstOrDefault();
             UpdateDataBase.Balance = finalresult;
             context.SaveChanges();
         }
@@ -77,12 +90,12 @@ namespace BankATM.UI.User_SignIn_ATM
             {
                 UpdateBalance();
                 TransactionsLog();
-                PrintUser.Print();
+                _printUser.Print();
             }
             else 
             { 
                 Console.WriteLine("You Havenot Enought Money");
-                PrintUser.Print();
+                _printUser.Print();
             }
 
 

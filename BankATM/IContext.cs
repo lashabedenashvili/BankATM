@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankATM
 {
-    public interface IContext
+    public interface IContext 
     {
         DbSet<Bill> Bill { get; set; }
         DbSet<BlockCard> BlockCard { get; set; }
@@ -11,5 +11,7 @@ namespace BankATM
         DbSet<LogTime> LogTime { get; set; }
         DbSet<Transactions> Transactions { get; set; }
         DbSet<User> User { get; set; }
+
+       
     }
 }

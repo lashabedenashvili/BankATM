@@ -78,7 +78,7 @@ namespace BankATM.UI
                     var InputPassword = Input.InputPassWord();
                     var Context = new Context();
                     var Checkuser = new CheckUserSignIn(InputCardNumber, InputPassword, Context);
-                    var UserId = Checkuser.Id();
+                    var UserId = Checkuser.GetDbId();
                     //    if (CheckUser == 0) { SignInGo = 1; }
                     //} while (SignInGo == 1);
                     //var context = new Context();

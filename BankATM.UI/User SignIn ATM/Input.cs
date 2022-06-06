@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM
 {
-    public class Input : Iinput
+    public class Input : IInput
     {
         public string input()
         {
-            var Input = Console.ReadLine();
-            return Input;
+            return Console.ReadLine();
+            
         }
     }
 }

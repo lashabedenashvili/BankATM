@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM
 {
-    public  interface Iinput
+    public  interface IInput
     {
         string input();
     }

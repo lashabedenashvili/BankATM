@@ -9,17 +9,17 @@ namespace BankATM.UI.User_Registration
 {
     public class AddUserDataBase : IAddUserDataBase
     {
-        private readonly string _Name;
-        private readonly string _Surname;
-        private readonly string _PersonalNumber;
-        readonly Ierrors error;
+        private readonly string _name;
+        private readonly string _surname;
+        private readonly string _personalNumber;
+        readonly IErrors _error;
 
-        public AddUserDataBase(string Name, string SurName, string PersonalNubmer, Ierrors error)
+        public AddUserDataBase(string Name, string SurName, string PersonalNubmer, IErrors error)
         {
-            _Name = Name;
-            _Surname = SurName;
-            _PersonalNumber = PersonalNubmer;
-            this.error = error;
+            _name = Name;
+            _surname = SurName;
+            _personalNumber = PersonalNubmer;
+            _error = error;
         }
 
 
@@ -30,9 +30,9 @@ namespace BankATM.UI.User_Registration
             var AddUser = new User
             {
                 
-                Name = _Name,
-                Surname = _Surname,
-                PersonalNumber = _PersonalNumber
+                Name = _name,
+                Surname = _surname,
+                PersonalNumber = _personalNumber
             };
             context.Add(AddUser);
            return context.SaveChanges();
@@ -43,9 +43,9 @@ namespace BankATM.UI.User_Registration
             if (result== 1)
             {
                 
-                Console.WriteLine(error.Message = "Register is Successful !");
+                Console.WriteLine(_error.Message = "Register is Successful !");
             }
-            else Console.WriteLine(error.Message = "Register is Filed!");
+            else Console.WriteLine(_error.Message = "Register is Filed!");
 
         }
 

@@ -9,20 +9,20 @@ namespace BankATM.UI.User_Registration
 {
     public class AddCardDataBase : IAddCardDataBase
     {
-        private readonly string CardNumber;
-        private readonly string PassWord;
-        private readonly string PersonalNumber;
-        private readonly IGetUserId UserrId;
-        private readonly Ierrors errors;
+        private readonly string _cardNumber;
+        private readonly string _passWord;
+        private readonly string _personalNumber;
+        private readonly IGetUserId _userrId;
+        private readonly IErrors _errors;
         
 
-        public AddCardDataBase(string _Cardnumb, string _Password, string _PersonalNumber, IGetUserId userrId, Ierrors errors)
+        public AddCardDataBase(string cardnumb, string password, string personalNumber, IGetUserId userrId, IErrors errors)
         {
-            CardNumber = _Cardnumb;
-            PassWord = _Password;
-            PersonalNumber = _PersonalNumber;
-            UserrId= userrId;
-            this.errors = errors;
+            _cardNumber = cardnumb;
+            _passWord = password;
+            _personalNumber = personalNumber;
+            _userrId= userrId;
+            _errors = errors;
         }
         public int AddCardDatabase()
         {
@@ -30,9 +30,9 @@ namespace BankATM.UI.User_Registration
             
             var AddCard = new Card
             {
-                UserId = UserrId.GetuserId(),
-                CardNumber = CardNumber,
-                Password = PassWord,
+                UserId = _userrId.GetuserId(),
+                CardNumber = _cardNumber,
+                Password = _passWord,
             };
             context.Add(AddCard);
             return context.SaveChanges();
@@ -44,9 +44,9 @@ namespace BankATM.UI.User_Registration
 
             if (result == 1)
             {
-                Console.WriteLine(errors.Message = "Card Added Successfully");
+                Console.WriteLine(_errors.Message = "Card Added Successfully");
             }
-            else Console.WriteLine(errors.Message = "Adding Card failed");
+            else Console.WriteLine(_errors.Message = "Adding Card failed");
         }
     }
 }

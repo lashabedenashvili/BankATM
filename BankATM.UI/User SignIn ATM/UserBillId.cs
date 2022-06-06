@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM
 {
-    public class UserBillId : ISignInID<UserBillId>
+    public class UserBillId : ISignInId<UserBillId>
     {
         
-        private readonly ISignInID<UserCardId> cardId;
+        private readonly ISignInId<UserCardId> _cardId;
 
-        public UserBillId( ISignInID<UserCardId> userId)
+        public UserBillId( ISignInId<UserCardId> cardId)
         {
           
-            cardId =userId;
+            _cardId = cardId;
         }
 
-        public int Id()
+        public int? GetDbId()
         {
             Context con = new Context();
-            var BillId= con.Bill.Where(n=>n.CardId== cardId.Id())
+            var BillId= con.Bill.Where(n=>n.CardId== _cardId.GetDbId())
                 .Select(n=>n.Id).FirstOrDefault();
             return BillId;
         }

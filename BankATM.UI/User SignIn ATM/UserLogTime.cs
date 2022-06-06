@@ -9,20 +9,20 @@ namespace BankATM.UI.User_SignIn_ATM
 {
     public  class UserLogTime
     {
-        private readonly CheckUserSignIn UserId;
+        private readonly CheckUserSignIn _userId;
 
         public UserLogTime(CheckUserSignIn userId)
         {
-            UserId = userId;
+            _userId = userId;
         }
 
         public void LogIn()
         {
-            var userId=UserId.Id();
+            var userId=_userId.GetDbId();
             Context context=new Context();
             var Log = new LogTime
             {
-                UserId = userId,
+                UserId =(int) userId,
                 Login = DateTime.Now,
                 MyProperty = null,
             };
@@ -33,7 +33,7 @@ namespace BankATM.UI.User_SignIn_ATM
         }
         public void LogOut()
         {
-            var userId = UserId.Id();
+            var userId = _userId.GetDbId();
             Context context = new Context();
             var LogOut =context.LogTime.Where(n=>n.MyProperty == null).FirstOrDefault();
             LogOut.MyProperty = DateTime.Now;

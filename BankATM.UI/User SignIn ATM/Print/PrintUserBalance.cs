@@ -9,9 +9,9 @@ namespace BankATM.UI.User_SignIn_ATM.Print
     public class PrintUserBalance : Iprint<PrintUserBalance>
     {
         private readonly IContext context;
-        private readonly ISignInID<UserCardId> CardId;
+        private readonly ISignInId<UserCardId> CardId;
 
-        public PrintUserBalance(IContext context, ISignInID<UserCardId> cardId)
+        public PrintUserBalance(IContext context, ISignInId<UserCardId> cardId)
         {
             this.context = context;
             CardId = cardId;
@@ -22,7 +22,7 @@ namespace BankATM.UI.User_SignIn_ATM.Print
             Context cont=new Context();
             var PrintBalance= cont
                 .Bill
-                .Where(n=>n.CardId== CardId.Id()).ToList();
+                .Where(n=>n.CardId== CardId.GetDbId()).ToList();
 
             foreach (var print in PrintBalance)
             {

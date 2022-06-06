@@ -10,16 +10,16 @@ namespace BankATM.UI.User_Registration
 {
     public class AddBalanceDataBase
     {
-        private readonly ISignInID<UserCardId> CardId;
-        private readonly string BillNumber;
-        private readonly Decimal Balance;
+        private readonly ISignInId<UserCardId> _cardId;
+        private readonly string _billNumber;
+        private readonly Decimal _balance;
 
 
-        public AddBalanceDataBase(ISignInID<UserCardId> cardId, string billNumber, decimal balance)
+        public AddBalanceDataBase(ISignInId<UserCardId> cardId, string billNumber, decimal balance)
         {
-            CardId = cardId;
-            BillNumber = billNumber;
-            Balance = balance;
+            _cardId = cardId;
+            _billNumber = billNumber;
+            _balance = balance;
 
         }
 
@@ -27,9 +27,9 @@ namespace BankATM.UI.User_Registration
         {
             var addc = new Bill
             {
-                BillNumber = BillNumber,
-                Balance = Balance,
-                CardId = CardId.Id(),
+                BillNumber = _billNumber,
+                Balance = _balance,
+                CardId =(int) _cardId.GetDbId(),
 
             };
             var context = new Context();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_Registration
 {
-    public interface Ierrors
+    public interface IErrors
     {
         public bool Successful { get; set; }
         public string Message { get; set; }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM
 {
-    public interface ISignInID<T> where T : class
+    public interface ISignInId<T> where T : class
     {
-        int Id();
+        int? GetDbId();
     }
 }

@@ -9,23 +9,23 @@ namespace BankATM.UI.User_SignIn_ATM
 {
     public class InputSignIn
     {
-        private readonly Iinput input;
-        public InputSignIn(Iinput input)
+        private readonly IInput _input;
+        public InputSignIn(IInput input)
         {
-            this.input=input;
+           _input=input;
         }
 
         public string InputCardNumber()
         {
-            return input.input();
+            return _input.input();
         }
         public string InputName()
         {
-            return input.input();
+            return _input.input();
         }
         public string InputWithdrawPassword()
         {
-            return input.input();
+            return _input.input();
         }
     }
 }
