@@ -55,8 +55,7 @@ namespace BankATM.UI.User_SignIn_ATM
         }
         private void TransactionsLog()
         {
-            var billId = _billId.GetDbId();
-            Context context = new Context();
+            var billId = _billId.GetDbId();           
             
             var Transactionlog = new Transactions
             {
@@ -64,9 +63,9 @@ namespace BankATM.UI.User_SignIn_ATM
                 WithdrowTime = DateTime.Now,
                 BillId =(int) billId,
             };
-            //context.Add(Transactionlog);
+            
             _context.Transactions.Add(Transactionlog);
-            _context.SaveChanges();
+            _context.saveChanges();
         }
         private void UpdateBalance()
         {
@@ -78,7 +77,7 @@ namespace BankATM.UI.User_SignIn_ATM
                 .Where(n => n.CardId == _cardId.GetDbId())
                 .FirstOrDefault();
             UpdateDataBase.Balance = finalresult;
-            context.SaveChanges();
+            _context.saveChanges();
         }
         
        

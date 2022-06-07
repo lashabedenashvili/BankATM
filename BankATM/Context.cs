@@ -20,5 +20,11 @@ namespace BankATM
             optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-BT9G1PG\GK;Initial Catalog=BankATM;Integrated Security=True");
 
         }
+
+        public  int saveChanges()
+        {
+            return SaveChanges();
+        }
+
     }
 }

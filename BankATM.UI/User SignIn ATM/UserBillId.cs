@@ -8,21 +8,25 @@ namespace BankATM.UI.User_SignIn_ATM
 {
     public class UserBillId : ISignInId<UserBillId>
     {
-        
-        private readonly ISignInId<UserCardId> _cardId;
 
-        public UserBillId( ISignInId<UserCardId> cardId)
+        private readonly ISignInId<UserCardId> _cardId;
+        private readonly IContext _context;
+
+        public UserBillId(ISignInId<UserCardId> cardId, IContext context)
         {
-          
+
             _cardId = cardId;
+            _context = context;
         }
 
         public int? GetDbId()
-        {
-            Context con = new Context();
-            var BillId= con.Bill.Where(n=>n.CardId== _cardId.GetDbId())
-                .Select(n=>n.Id).FirstOrDefault();
-            return BillId;
+        {           
+            return _context
+                .Bill
+                .Where(n => n.CardId == _cardId.GetDbId())
+                .Select(n => n.Id)
+                .FirstOrDefault();
+
         }
     }
 }

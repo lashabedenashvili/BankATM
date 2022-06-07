@@ -12,20 +12,21 @@ namespace BankATM.UI.User_Registration
         private readonly string _name;
         private readonly string _surname;
         private readonly string _personalNumber;
-        readonly IErrors _error;
+        private readonly IErrors _error;
+        private readonly IContext _context;
 
-        public AddUserDataBase(string Name, string SurName, string PersonalNubmer, IErrors error)
+        public AddUserDataBase(string Name, string SurName, string PersonalNubmer, IErrors error, IContext context)
         {
             _name = Name;
             _surname = SurName;
             _personalNumber = PersonalNubmer;
             _error = error;
+            _context = context;
         }
 
 
         public int AddUserDatabase()
-        {
-            Context context = new Context();          
+        {                  
 
             var AddUser = new User
             {
@@ -34,8 +35,8 @@ namespace BankATM.UI.User_Registration
                 Surname = _surname,
                 PersonalNumber = _personalNumber
             };
-            context.Add(AddUser);
-           return context.SaveChanges();
+                  _context.User.Add(AddUser);
+           return _context.saveChanges();
         }
 
         public void Message(int result)        {

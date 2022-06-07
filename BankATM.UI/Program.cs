@@ -35,7 +35,8 @@ namespace BankATM.UI
                     PrintUserRegistration.PrintPersonalNumber();
                     var PersonalNumber = Input.InputPersonalNumber();
                     var error = new Errors();
-                    var AddUserBase = new AddUserDataBase(Name, SurName, PersonalNumber, error);
+                    var ccontex = new Context();
+                    var AddUserBase = new AddUserDataBase(Name, SurName, PersonalNumber, error, ccontex);
                     var ResultMessegeUser = AddUserBase.AddUserDatabase();
                     PrintUserRegistration.PrintCardNumber();
                     var CardNumber = Input.InputCardNumber();
@@ -46,13 +47,16 @@ namespace BankATM.UI
                     PrintUserRegistration.Balance();
                     var Balance = Input.Balance();
                     // Add Card & Balance
-                    var UserId = new GetUserId(PersonalNumber);
+                    var cont = new Context();
+                    var UserId = new GetUserId(PersonalNumber, cont);
                     var errors = new Errors();
-                    var addCardDataBase = new AddCardDataBase(CardNumber, PassWord, PersonalNumber, UserId, errors);
+                    var con = new Context();
+                    var addCardDataBase = new AddCardDataBase(CardNumber, PassWord, PersonalNumber, UserId, errors, con);
                     var ResultMessegeCard = addCardDataBase.AddCardDatabase();
                     var context = new Context();
                     var CardId = new UserCardId(context, CardNumber, PassWord);
-                    var AddBalanceBillDatabase = new AddBalanceDataBase(CardId, BillNumber, Balance);
+                    var conte=new Context();    
+                    var AddBalanceBillDatabase = new AddBalanceDataBase(CardId, BillNumber, Balance, conte);
                     AddBalanceBillDatabase.AddBalanceBillNumber();
                     // Added User & Card Result
                     AddUserBase.Message(ResultMessegeUser);
@@ -83,7 +87,7 @@ namespace BankATM.UI
                     //} while (SignInGo == 1);
                     //var context = new Context();
                     var UserIId=new CheckUserSignIn(InputCardNumber, InputPassword, Context);
-                    var LogTime = new UserLogTime(UserIId);
+                    var LogTime = new UserLogTime(UserIId,Context);
                     LogTime.LogIn();
                     var PrintUserDetail = new PrintUserInfo(Context, Checkuser);
                     var CardId = new UserCardId(Context, InputCardNumber, InputPassword);
@@ -101,8 +105,10 @@ namespace BankATM.UI
                         Console.WriteLine("Enter money");
                         decimal money = decimal.Parse(Console.ReadLine());
                         var CardIdd=new UserCardId(Context, InputCardNumber, InputPassword);
-                        var BillId = new UserBillId(CardIdd);
-                        var Withdraw = new Withdraw(money, CardId, BillId, PrintBalance);
+                        var context=new Context();
+                        var BillId = new UserBillId(CardIdd, context);
+                        Context xon=new Context();
+                        var Withdraw = new Withdraw(money, CardId, BillId, PrintBalance, xon);
                         Withdraw.WithDraw();
                         
                     }

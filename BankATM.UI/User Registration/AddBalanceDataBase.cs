@@ -13,14 +13,15 @@ namespace BankATM.UI.User_Registration
         private readonly ISignInId<UserCardId> _cardId;
         private readonly string _billNumber;
         private readonly Decimal _balance;
+        private readonly IContext _context;
 
 
-        public AddBalanceDataBase(ISignInId<UserCardId> cardId, string billNumber, decimal balance)
+        public AddBalanceDataBase(ISignInId<UserCardId> cardId, string billNumber, decimal balance, IContext context)
         {
             _cardId = cardId;
             _billNumber = billNumber;
             _balance = balance;
-
+            _context = context;
         }
 
         public int AddBalanceBillNumber()
@@ -29,12 +30,12 @@ namespace BankATM.UI.User_Registration
             {
                 BillNumber = _billNumber,
                 Balance = _balance,
-                CardId =(int) _cardId.GetDbId(),
+                CardId = (int)_cardId.GetDbId(),
 
             };
-            var context = new Context();
-            context.Add(addc);
-            return context.SaveChanges();
+
+                   _context.Bill.Add(addc);
+            return _context.saveChanges();
 
 
         }

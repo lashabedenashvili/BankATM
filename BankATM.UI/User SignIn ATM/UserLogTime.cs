@@ -7,38 +7,43 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM
 {
-    public  class UserLogTime
+    public class UserLogTime
     {
         private readonly CheckUserSignIn _userId;
+        private readonly IContext _context;
 
-        public UserLogTime(CheckUserSignIn userId)
+        public UserLogTime(CheckUserSignIn userId, IContext context)
         {
             _userId = userId;
+            _context = context;
         }
 
         public void LogIn()
         {
-            var userId=_userId.GetDbId();
-            Context context=new Context();
+            var userId = _userId.GetDbId();
+
             var Log = new LogTime
             {
-                UserId =(int) userId,
+                UserId = (int)userId,
                 Login = DateTime.Now,
                 MyProperty = null,
             };
-            context.Add(Log);
-            context.SaveChanges();
+            _context.LogTime.Add(Log);
+            _context.saveChanges();
 
-           
+
         }
         public void LogOut()
         {
             var userId = _userId.GetDbId();
-            Context context = new Context();
-            var LogOut =context.LogTime.Where(n=>n.MyProperty == null).FirstOrDefault();
+            var LogOut = _context
+                .LogTime
+                .Where(n => n.MyProperty == null)
+                .FirstOrDefault();
+
             LogOut.MyProperty = DateTime.Now;
-            context.Add(LogOut);
-            context.SaveChanges();
+            _context.LogTime.Add(LogOut);
+            _context.saveChanges();
         }
 
 

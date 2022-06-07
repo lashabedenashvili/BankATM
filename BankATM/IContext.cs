@@ -12,6 +12,8 @@ namespace BankATM
         DbSet<Transactions> Transactions { get; set; }
         DbSet<User> User { get; set; }
 
+        int saveChanges();
+
        
     }
 }

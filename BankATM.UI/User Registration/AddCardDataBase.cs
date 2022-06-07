@@ -14,33 +14,35 @@ namespace BankATM.UI.User_Registration
         private readonly string _personalNumber;
         private readonly IGetUserId _userrId;
         private readonly IErrors _errors;
-        
+        private readonly IContext _context;
 
-        public AddCardDataBase(string cardnumb, string password, string personalNumber, IGetUserId userrId, IErrors errors)
+
+        public AddCardDataBase(string cardnumb, string password, string personalNumber, IGetUserId userrId, IErrors errors, IContext context)
         {
             _cardNumber = cardnumb;
             _passWord = password;
             _personalNumber = personalNumber;
-            _userrId= userrId;
+            _userrId = userrId;
             _errors = errors;
+            _context = context;
         }
         public int AddCardDatabase()
         {
-            Context context = new Context();
-            
+
+
             var AddCard = new Card
             {
                 UserId = _userrId.GetuserId(),
                 CardNumber = _cardNumber,
                 Password = _passWord,
             };
-            context.Add(AddCard);
-            return context.SaveChanges();
+                   _context.Card.Add(AddCard);
+            return _context.saveChanges();
         }
 
         public void Message(int result)
         {
-            
+
 
             if (result == 1)
             {
