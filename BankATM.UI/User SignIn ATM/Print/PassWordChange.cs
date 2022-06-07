@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM.Print
 {
-    public class PassWordChange : Iprint<PassWordChange>
+    public class PassWordChange:Pprint
     {
+       
+
         public void Print()
         {
-            Console.WriteLine("PassWord Change >>> 2 >>>");
+            Print("PassWord Change >>> 2 <<<");
+            
         }
 
-
+       
     }
 }

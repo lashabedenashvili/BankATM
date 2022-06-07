@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM.Print
 {
-    public class PrintWithdraw : Iprint<PrintWithdraw>
+    public class PrintWithdraw:Pprint
     {
+      
+
         public void Print()
         {
-            Console.WriteLine("\n Withdraw >>> 1 <<< ");
+           Print("\nWithdraw        >>> 1 <<< ");
         }
+
+       
     }
 }

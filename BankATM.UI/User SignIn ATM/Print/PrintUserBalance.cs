@@ -6,29 +6,32 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM.Print
 {
-    public class PrintUserBalance : Iprint<PrintUserBalance>
+    public class PrintUserBalance:Pprint,IPrintUserBalance
     {
-        private readonly IContext context;
-        private readonly ISignInId<UserCardId> CardId;
+        private readonly IContext _context;
+        private readonly ISignInId<UserCardId> _cardId;
+        
+
+
 
         public PrintUserBalance(IContext context, ISignInId<UserCardId> cardId)
         {
-            this.context = context;
-            CardId = cardId;
+            _context = context;
+            _cardId = cardId;
+            
         }
 
         public void Print()
         {
-            Context cont=new Context();
-            var PrintBalance= cont
+            var PrintBalance = _context
                 .Bill
-                .Where(n=>n.CardId== CardId.GetDbId()).ToList();
+                .Where(n => n.CardId == _cardId.GetDbId()).ToList();
 
             foreach (var print in PrintBalance)
             {
-                Console.Write("CardNumber: "+print.BillNumber+ "\nBalance: $"+print.Balance);
+               Print(("\nCardNumber: " + print.BillNumber + "\nBalance: $" + print.Balance + "\n"));
             }
-            
+
         }
     }
 }

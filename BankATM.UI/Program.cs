@@ -91,13 +91,15 @@ namespace BankATM.UI
                     LogTime.LogIn();
                     var PrintUserDetail = new PrintUserInfo(Context, Checkuser);
                     var CardId = new UserCardId(Context, InputCardNumber, InputPassword);
+                    
                     var PrintBalance = new PrintUserBalance(Context, CardId);
                     PrintUserDetail.Print();
                     PrintBalance.Print();
                     var PrintWithdraw = new PrintWithdraw();
+                  
                     var PrintChangePassWord = new PassWordChange();
                     PrintWithdraw.Print();
-                    PrintChangePassWord.Print();
+                    PrintChangePassWord.Print();    
                     var InputWithdrawPassword = new InputSignIn(InputSignIn);
                     var WithdrawPassword = InputWithdrawPassword.InputWithdrawPassword();
                     if (WithdrawPassword == "1")
@@ -107,9 +109,23 @@ namespace BankATM.UI
                         var CardIdd=new UserCardId(Context, InputCardNumber, InputPassword);
                         var context=new Context();
                         var BillId = new UserBillId(CardIdd, context);
-                        Context xon=new Context();
-                        var Withdraw = new Withdraw(money, CardId, BillId, PrintBalance, xon);
+                        Context xon=new Context();                        
+                        var Withdraw = new Withdraw(money,CardId, BillId,xon, PrintBalance);
                         Withdraw.WithDraw();
+                        
+                        
+                    }
+                    else if (WithdrawPassword == "2")
+                    {
+                        Context PassWordChangeContex=new Context();
+                        Input PasswordChangeInput = new Input();
+                        CheckUserSignIn userId = new CheckUserSignIn(InputCardNumber, InputPassword, PassWordChangeContex);
+                        var PassWordChange = new PassWordChangee(userId, InputCardNumber, InputPassword, PassWordChangeContex, PasswordChangeInput);
+                        PassWordChange.PrintOldPassword();
+                        PassWordChange.InputOldPassword();
+                        PassWordChange.PrintNewPassWord();
+                        var newPassword= PassWordChange.InputNewPassword();
+                        PassWordChange.UpdateNewPassWord(newPassword);
                         
                     }
                     // var InsertWithdrawOrPassWord=

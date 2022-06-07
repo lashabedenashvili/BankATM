@@ -16,16 +16,16 @@ namespace BankATM.UI.User_SignIn_ATM
         private readonly decimal _amount;
         private readonly ISignInId<UserCardId> _cardId;
         private readonly ISignInId<UserBillId> _billId;
-        private readonly Iprint<PrintUserBalance> _printUser;
-        
-        public Withdraw(decimal amount, ISignInId<UserCardId> cardId, ISignInId<UserBillId> billId, Iprint<PrintUserBalance> print, IContext context)
+        private readonly IPrintUserBalance _printUser;
+
+        public Withdraw(decimal amount, ISignInId<UserCardId> cardId, ISignInId<UserBillId> billId, IContext context, IPrintUserBalance printUser)
         {
             _amount = amount;
             _cardId = cardId;
             _billId = billId;
-            _printUser = print;
+
             _context = context;
-            
+            _printUser = printUser;
         }
 
         private decimal Balance()
@@ -70,9 +70,8 @@ namespace BankATM.UI.User_SignIn_ATM
         private void UpdateBalance()
         {
            var balance= Balance();
-            var finalresult = balance - _amount;
-            Context context = new Context();
-            var UpdateDataBase = context
+            var finalresult = balance - _amount;            
+            var UpdateDataBase =_context
                 .Bill
                 .Where(n => n.CardId == _cardId.GetDbId())
                 .FirstOrDefault();
