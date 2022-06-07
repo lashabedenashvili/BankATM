@@ -117,9 +117,9 @@ namespace BankATM.UI
                     }
                     else if (WithdrawPassword == "2")
                     {
-                        Context PassWordChangeContex=new Context();
-                        Input PasswordChangeInput = new Input();
-                        CheckUserSignIn userId = new CheckUserSignIn(InputCardNumber, InputPassword, PassWordChangeContex);
+                        var PassWordChangeContex=new Context();
+                        var PasswordChangeInput = new Input();
+                        var userId = new CheckUserSignIn(InputCardNumber, InputPassword, PassWordChangeContex);
                         var PassWordChange = new PassWordChangee(userId, InputCardNumber, InputPassword, PassWordChangeContex, PasswordChangeInput);
                         PassWordChange.PrintOldPassword();
                         PassWordChange.InputOldPassword();

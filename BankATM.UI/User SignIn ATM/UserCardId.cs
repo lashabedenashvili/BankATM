@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM
 {
-    public class UserCardId :ISignInId<UserCardId>
+    public class UserCardId : ISignInId<UserCardId>, IUserCardId
     {
         private readonly IContext _context;
         private readonly string _cardNumber;
@@ -21,12 +21,12 @@ namespace BankATM.UI.User_SignIn_ATM
 
         public int? GetDbId()
         {
-          return _context
-                 .Card
-                 .Where(n => n.CardNumber == _cardNumber & n.Password == _passWord)
-                 .Select(n => n.Id)
-                 .FirstOrDefault();
-            
+            return _context
+                   .Card
+                   .Where(n => n.CardNumber == _cardNumber & n.Password == _passWord)
+                   .Select(n => n.Id)
+                   .FirstOrDefault();
+
         }
     }
 }

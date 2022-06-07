@@ -69,8 +69,7 @@ namespace BankATM.UI.User_SignIn_ATM
                     .Where(n => n.UserId == userId && n.CardNumber == _cardNumber)
                     .FirstOrDefault();
 
-                UpdatePassword.Password = newPassword;
-                _context.Card.Add(UpdatePassword);
+                UpdatePassword.Password = newPassword;                
                 _context.saveChanges();
                 Print("PassWord Change Succsesfule");
             }
