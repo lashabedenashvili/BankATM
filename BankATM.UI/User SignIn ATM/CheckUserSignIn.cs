@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM
 {
-    public class CheckUserSignIn :ISignInId<CheckUserSignIn>
+    public class CheckUserSignIn :IGetId<CheckUserSignIn>
     {
         private readonly string _cardNumber;
         private readonly string _password;

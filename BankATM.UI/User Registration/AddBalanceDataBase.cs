@@ -10,13 +10,13 @@ namespace BankATM.UI.User_Registration
 {
     public class AddBalanceDataBase
     {
-        private readonly ISignInId<UserCardId> _cardId;
+        private readonly IGetId<UserCardId> _cardId;
         private readonly string _billNumber;
         private readonly Decimal _balance;
         private readonly IContext _context;
 
 
-        public AddBalanceDataBase(ISignInId<UserCardId> cardId, string billNumber, decimal balance, IContext context)
+        public AddBalanceDataBase(IGetId<UserCardId> cardId, string billNumber, decimal balance, IContext context)
         {
             _cardId = cardId;
             _billNumber = billNumber;

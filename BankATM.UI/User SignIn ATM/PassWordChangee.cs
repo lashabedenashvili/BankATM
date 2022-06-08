@@ -13,14 +13,14 @@ namespace BankATM.UI.User_SignIn_ATM
 
 
 
-        private readonly ISignInId<CheckUserSignIn> _userId;
+        private readonly IGetId<CheckUserSignIn> _userId;
         private readonly string _cardNumber;
         private readonly string _passWord;
         private readonly IContext _context;
         private readonly IInput _input;
 
 
-        public PassWordChangee(ISignInId<CheckUserSignIn> userId, string cardNumber, string passWord, IContext context, IInput input)
+        public PassWordChangee(IGetId<CheckUserSignIn> userId, string cardNumber, string passWord, IContext context, IInput input)
         {
 
             _userId = userId;

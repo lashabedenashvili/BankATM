@@ -9,12 +9,12 @@ namespace BankATM.UI.User_SignIn_ATM.Print
     public class PrintUserBalance:Pprint,IPrintUserBalance
     {
         private readonly IContext _context;
-        private readonly ISignInId<UserCardId> _cardId;
+        private readonly IGetId<UserCardId> _cardId;
         
 
 
 
-        public PrintUserBalance(IContext context, ISignInId<UserCardId> cardId)
+        public PrintUserBalance(IContext context, IGetId<UserCardId> cardId)
         {
             _context = context;
             _cardId = cardId;
@@ -29,7 +29,7 @@ namespace BankATM.UI.User_SignIn_ATM.Print
 
             foreach (var print in PrintBalance)
             {
-               Print(("\nCardNumber: " + print.BillNumber + "\nBalance: $" + print.Balance + "\n"));
+               Print(("\nBill Number: " + print.BillNumber + "\nBalance: $" + print.Balance + "\n"));
             }
 
         }

@@ -1,4 +1,5 @@
-﻿using BankATM.UI.User_Registration;
+﻿using BankATM.UI.Block_Card;
+using BankATM.UI.User_Registration;
 using BankATM.UI.User_SignIn_ATM;
 using BankATM.UI.User_SignIn_ATM.Print;
 using System;
@@ -55,7 +56,7 @@ namespace BankATM.UI
                     var ResultMessegeCard = addCardDataBase.AddCardDatabase();
                     var context = new Context();
                     var CardId = new UserCardId(context, CardNumber, PassWord);
-                    var conte=new Context();    
+                    var conte = new Context();
                     var AddBalanceBillDatabase = new AddBalanceDataBase(CardId, BillNumber, Balance, conte);
                     AddBalanceBillDatabase.AddBalanceBillNumber();
                     // Added User & Card Result
@@ -86,65 +87,65 @@ namespace BankATM.UI
                     //    if (CheckUser == 0) { SignInGo = 1; }
                     //} while (SignInGo == 1);
                     //var context = new Context();
-                    var UserIId=new CheckUserSignIn(InputCardNumber, InputPassword, Context);
-                    var LogTime = new UserLogTime(UserIId,Context);
+                    var UserIId = new CheckUserSignIn(InputCardNumber, InputPassword, Context);
+                    var LogTime = new UserLogTime(UserIId, Context);
                     LogTime.LogIn();
                     var PrintUserDetail = new PrintUserInfo(Context, Checkuser);
                     var CardId = new UserCardId(Context, InputCardNumber, InputPassword);
-                    
+
                     var PrintBalance = new PrintUserBalance(Context, CardId);
                     PrintUserDetail.Print();
                     PrintBalance.Print();
                     var PrintWithdraw = new PrintWithdraw();
-                  
+
                     var PrintChangePassWord = new PassWordChange();
                     PrintWithdraw.Print();
-                    PrintChangePassWord.Print();    
+                    PrintChangePassWord.Print();
                     var InputWithdrawPassword = new InputSignIn(InputSignIn);
                     var WithdrawPassword = InputWithdrawPassword.InputWithdrawPassword();
                     if (WithdrawPassword == "1")
                     {
                         Console.WriteLine("Enter money");
                         decimal money = decimal.Parse(Console.ReadLine());
-                        var CardIdd=new UserCardId(Context, InputCardNumber, InputPassword);
-                        var context=new Context();
+                        var CardIdd = new UserCardId(Context, InputCardNumber, InputPassword);
+                        var context = new Context();
                         var BillId = new UserBillId(CardIdd, context);
-                        Context xon=new Context();                        
-                        var Withdraw = new Withdraw(money,CardId, BillId,xon, PrintBalance);
+                        Context xon = new Context();
+                        var Withdraw = new Withdraw(money, CardId, BillId, xon, PrintBalance);
                         Withdraw.WithDraw();
-                        
-                        
+
+
                     }
                     else if (WithdrawPassword == "2")
                     {
-                        var PassWordChangeContex=new Context();
+                        var PassWordChangeContex = new Context();
                         var PasswordChangeInput = new Input();
                         var userId = new CheckUserSignIn(InputCardNumber, InputPassword, PassWordChangeContex);
                         var PassWordChange = new PassWordChangee(userId, InputCardNumber, InputPassword, PassWordChangeContex, PasswordChangeInput);
                         PassWordChange.PrintOldPassword();
                         PassWordChange.InputOldPassword();
                         PassWordChange.PrintNewPassWord();
-                        var newPassword= PassWordChange.InputNewPassword();
+                        var newPassword = PassWordChange.InputNewPassword();
                         PassWordChange.UpdateNewPassWord(newPassword);
-                        
+
+
                     }
+
                     // var InsertWithdrawOrPassWord=
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 }
+                else if (InputRegistration == "3")
+                {
+                    var CardNumber = new BlockCards();
+                    CardNumber.PrintCardNumber();
+                    var cardNumberInput = new Input();
+                    var inputCardNumber = CardNumber.InputCardNumber(cardNumberInput);
+                    CardNumber.PrintBlockCard(inputCardNumber);
+                    Context ccon = new Context();
+                    var UserId = new GetUserIdFromCardNumber(ccon, inputCardNumber);
+                    CardNumber.PrintBlockUserInfo(ccon, UserId);
+
+                    }
             } while (go == 1);
 
 

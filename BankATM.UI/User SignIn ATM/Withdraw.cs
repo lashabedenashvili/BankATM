@@ -14,11 +14,11 @@ namespace BankATM.UI.User_SignIn_ATM
     {
         private readonly IContext _context;
         private readonly decimal _amount;
-        private readonly ISignInId<UserCardId> _cardId;
-        private readonly ISignInId<UserBillId> _billId;
+        private readonly IGetId<UserCardId> _cardId;
+        private readonly IGetId<UserBillId> _billId;
         private readonly IPrintUserBalance _printUser;
 
-        public Withdraw(decimal amount, ISignInId<UserCardId> cardId, ISignInId<UserBillId> billId, IContext context, IPrintUserBalance printUser)
+        public Withdraw(decimal amount, IGetId<UserCardId> cardId, IGetId<UserBillId> billId, IContext context, IPrintUserBalance printUser)
         {
             _amount = amount;
             _cardId = cardId;

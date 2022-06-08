@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace BankATM.UI.User_SignIn_ATM
 {
-    public class UserBillId : ISignInId<UserBillId>
+    public class UserBillId : IGetId<UserBillId>
     {
 
-        private readonly ISignInId<UserCardId> _cardId;
+        private readonly IGetId<UserCardId> _cardId;
         private readonly IContext _context;
 
-        public UserBillId(ISignInId<UserCardId> cardId, IContext context)
+        public UserBillId(IGetId<UserCardId> cardId, IContext context)
         {
 
             _cardId = cardId;

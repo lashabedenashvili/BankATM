@@ -22,8 +22,4 @@
     <ProjectReference Include="..\BankATM\BankATM.Domein.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Block Card\" />
-  </ItemGroup>
-
 </Project>

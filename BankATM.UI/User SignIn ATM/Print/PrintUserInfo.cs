@@ -9,10 +9,10 @@ namespace BankATM.UI.User_SignIn_ATM.Print
     public class PrintUserInfo:Pprint
     {
         private readonly IContext _context;
-        private readonly ISignInId<CheckUserSignIn> _userId;
+        private readonly IGetId<CheckUserSignIn> _userId;
         
 
-        public PrintUserInfo(IContext context, ISignInId<CheckUserSignIn> userId)
+        public PrintUserInfo(IContext context, IGetId<CheckUserSignIn> userId)
         {
             _context = context;
             _userId = userId;
