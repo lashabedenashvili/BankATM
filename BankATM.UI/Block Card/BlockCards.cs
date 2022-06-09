@@ -12,14 +12,21 @@ namespace BankATM.UI.User_SignIn_ATM
     public class BlockCards:Pprint
     {     
 
-
-
-        public void AddBlockCard(IContext context, IUserCardId _userCardId)
+        private int CardId(IContext context, string cardNumber)
         {
-            var cardId = _userCardId.GetDbId();
+            return context
+                .Card
+                .Where(n => n.CardNumber == cardNumber)
+                .Select(n => n.Id)
+                .FirstOrDefault();
+        }
+
+        public void AddBlockCard(IContext context, string cardNumber)
+        {
+            var cardId = CardId(context, cardNumber);
             var AddBlockCard = new BlockCard
             {
-                CardId = (int)cardId,
+                CardId =cardId,
             };
             context.BlockCard.Add(AddBlockCard);
             context.saveChanges();
