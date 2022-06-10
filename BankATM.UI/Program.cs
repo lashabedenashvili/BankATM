@@ -227,7 +227,13 @@ namespace BankATM.UI
                             var Context = new Context();
                             var Checkuser = new CheckUserSignIn(InputCardNumber, InputPassword, Context);
                             var UserId = Checkuser.GetDbId();
+                            if(UserId == 0)
+                            {
+                                Console.WriteLine("Wrong PassWord Or Card Number Please Try Again");
 
+                                continue;
+                            }
+                            ////////////////////////////////////////////////////////////////////////////////
                             var UserIId = new CheckUserSignIn(InputCardNumber, InputPassword, Context);
                             var LogTime = new UserLogTime(UserIId, Context);
                             LogTime.LogIn();
@@ -279,7 +285,7 @@ namespace BankATM.UI
                                     var userId = new CheckUserSignIn(InputCardNumber, InputPassword, PassWordChangeContex);
                                     var PassWordChange = new PassWordChangee(userId, InputCardNumber, InputPassword, PassWordChangeContex, PasswordChangeInput);
                                     PassWordChange.PrintOldPassword();
-                                    var inputPass=PassWordChange.InputOldPassword();
+                                    var inputPass = PassWordChange.InputOldPassword();
                                     var passNumbCheck = new PassWordNumberCheck(rreg);
                                     var passs = passNumbCheck.PassWordnumberCheck(inputPass);
                                     if (passs == false)
@@ -295,7 +301,7 @@ namespace BankATM.UI
                                         PassWordChange.PrintNewPassWord();
                                         var newPassword = PassWordChange.InputNewPassword();
                                         var newPass = passNumbCheck.PassWordnumberCheck(newPassword);
-                                        if(newPass == false)
+                                        if (newPass == false)
                                         {
                                             newPassCheck = "1";
                                             continue;
@@ -313,14 +319,27 @@ namespace BankATM.UI
                 }
                 else if (InputRegistration == "3")
                 {
-                    var CardNumber = new BlockCards();
-                    CardNumber.PrintCardNumber();
-                    var cardNumberInput = new Input();
-                    var inputCardNumber = CardNumber.InputCardNumber(cardNumberInput);
-                    CardNumber.PrintBlockCard(inputCardNumber);
-                    Context ccon = new Context();
-                    var UserId = new GetUserIdFromCardNumber(ccon, inputCardNumber);
-                    CardNumber.PrintBlockUserInfo(ccon, UserId);
+                    //Card Number Check
+                    string cardNumbcheck = "1";
+                    while (cardNumbcheck == "1")
+                    {
+                        var CardNumber = new BlockCards();
+                        CardNumber.PrintCardNumber();
+                        var cardNumberInput = new Input();
+                        var inputCardNumber = CardNumber.InputCardNumber(cardNumberInput);
+                        var cardNumbcheckFunction = new CardNumberUnique();
+                        var regg = new Regexs();
+                        var cardNumbfunction = cardNumbcheckFunction.CardNumberNumbersCheck(regg, inputCardNumber);
+                        if (cardNumbfunction == false)
+                        {
+                            cardNumbcheck = "1";
+                            continue;
+                        }
+                        CardNumber.PrintBlockCard(inputCardNumber);
+                        Context ccon = new Context();
+                        var UserId = new GetUserIdFromCardNumber(ccon, inputCardNumber);
+                        CardNumber.PrintBlockUserInfo(ccon, UserId);
+                    }
 
                 }
                 else

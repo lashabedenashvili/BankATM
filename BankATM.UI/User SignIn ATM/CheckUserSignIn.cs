@@ -26,6 +26,7 @@ namespace BankATM.UI.User_SignIn_ATM
                 .Where(n => n.CardNumber == _cardNumber & n.Password == _password)
                 .Select(n => n.UserId)
                 .FirstOrDefault();
+          
         }
     }
 }
