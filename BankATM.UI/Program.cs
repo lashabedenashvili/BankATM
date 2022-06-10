@@ -203,7 +203,7 @@ namespace BankATM.UI
                         int WrongPasscount = 0;
                         while (passNumbChek == "1")
                         {
-                            
+
                             PrintUserInfo.PrintPassWord();
                             var InputPassword = Input.InputPassWord();
                             var PassCheck = new PassWordNumberCheck(rreg);
@@ -212,20 +212,17 @@ namespace BankATM.UI
                             {
                                 passNumbChek = "1";
                                 WrongPasscount++;
-                                
+
                                 //block Card
                                 if (WrongPasscount == 3)
                                 {
                                     var blockCard = new BlockCards();
                                     var ccontex = new Context();
                                     blockCard.AddBlockCard(ccontex, InputCardNumber);
-                                    blockCard.PrintBlockCard(InputCardNumber);                                   
+                                    blockCard.PrintBlockCard(InputCardNumber);
                                     return;
-                                    
-                                    
                                 }
                                 continue;
-                                
                             }
                             var Context = new Context();
                             var Checkuser = new CheckUserSignIn(InputCardNumber, InputPassword, Context);
@@ -249,31 +246,66 @@ namespace BankATM.UI
                             var WithdrawPassword = InputWithdrawPassword.InputWithdrawPassword();
                             if (WithdrawPassword == "1")
                             {
-                                Console.WriteLine("Enter money");
-                                decimal money = decimal.Parse(Console.ReadLine());
-                                var CardIdd = new UserCardId(Context, InputCardNumber, InputPassword);
-                                var context = new Context();
-                                var BillId = new UserBillId(CardIdd, context);
-                                Context xon = new Context();
-                                var Withdraw = new Withdraw(money, CardId, BillId, xon, PrintBalance);
-                                Withdraw.WithDraw();
-
+                                // Balance Numb Check
+                                string balanNumbCheck = "1";
+                                while (balanNumbCheck == "1")
+                                {
+                                    Console.WriteLine("Enter money");
+                                    decimal money = decimal.Parse(Console.ReadLine());
+                                    var balanceNumbCheck = new BalanceCheck();
+                                    var bal = balanceNumbCheck.BalanceChecks(rreg, money);
+                                    if (bal == false)
+                                    {
+                                        balanNumbCheck = "1";
+                                        continue;
+                                    }
+                                    var CardIdd = new UserCardId(Context, InputCardNumber, InputPassword);
+                                    var context = new Context();
+                                    var BillId = new UserBillId(CardIdd, context);
+                                    var Withdraw = new Withdraw(money, CardId, BillId, context, PrintBalance);
+                                    Withdraw.WithDraw();
+                                }
 
                             }
+                            // Change Password Numb Check
                             else if (WithdrawPassword == "2")
                             {
-                                var PassWordChangeContex = new Context();
-                                var PasswordChangeInput = new Input();
-                                var userId = new CheckUserSignIn(InputCardNumber, InputPassword, PassWordChangeContex);
-                                var PassWordChange = new PassWordChangee(userId, InputCardNumber, InputPassword, PassWordChangeContex, PasswordChangeInput);
-                                PassWordChange.PrintOldPassword();
-                                PassWordChange.InputOldPassword();
-                                PassWordChange.PrintNewPassWord();
-                                var newPassword = PassWordChange.InputNewPassword();
-                                PassWordChange.UpdateNewPassWord(newPassword);
+                                //Old Pass Check
+                                string oldPassChange = "1";
+                                while (oldPassChange == "1")
+                                {
+                                    var PassWordChangeContex = new Context();
+                                    var PasswordChangeInput = new Input();
+                                    var userId = new CheckUserSignIn(InputCardNumber, InputPassword, PassWordChangeContex);
+                                    var PassWordChange = new PassWordChangee(userId, InputCardNumber, InputPassword, PassWordChangeContex, PasswordChangeInput);
+                                    PassWordChange.PrintOldPassword();
+                                    var inputPass=PassWordChange.InputOldPassword();
+                                    var passNumbCheck = new PassWordNumberCheck(rreg);
+                                    var passs = passNumbCheck.PassWordnumberCheck(inputPass);
+                                    if (passs == false)
+                                    {
+                                        oldPassChange = "1";
+                                        continue;
 
+                                    }
+                                    // New Pass Check
+                                    string newPassCheck = "1";
+                                    while (newPassCheck == "1")
+                                    {
+                                        PassWordChange.PrintNewPassWord();
+                                        var newPassword = PassWordChange.InputNewPassword();
+                                        var newPass = passNumbCheck.PassWordnumberCheck(newPassword);
+                                        if(newPass == false)
+                                        {
+                                            newPassCheck = "1";
+                                            continue;
+                                        }
+                                        PassWordChange.UpdateNewPassWord(newPassword);
+                                    }
+                                }
 
                             }
+
                         }
 
                     }
